@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">{{ post.title }}</h5>
+            <small class="text-muted">Автор: {{ post.author }} | {{ post.published_date }}</small>
+            <p class="card-text">{{ post.content }}</p>
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'blog:like_post' post.pk %}" class="btn btn-success btn-sm">
+                    Лайкнуть ({{ post.total_likes }})
+                </a>
+                {% if post.author == request.user %}
+                    <a href="{% url 'blog:post_edit' post.pk %}" class="btn btn-warning btn-sm">Редактировать</a>
+                    <a href="{% url 'blog:post_delete' post.pk %}" class="btn btn-danger btn-sm">Удалить</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Комментарии -->
+    <div class="card mt-3">
+        <div class="card-header">
+            Комментарии
+        </div>
+        <div class="card-body">
+            {% for comment in comments %}
+                <div class="mb-3">
+                    <strong>{{ comment.author }}</strong> | {{ comment.created_date }}
+                    <p>{{ comment.text }}</p>
+                </div>
+            {% empty %}
+                <p>Нет комментариев.</p>
+            {% endfor %}
+
+            {% if user.is_authenticated %}
+                <h5>Добавить комментарий</h5>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ comment_form.as_p }}
+                    <button type="submit" class="btn btn-primary">Отправить</button>
+                </form>
+            {% else %}
+                <p>Войдите, чтобы оставить комментарий.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
