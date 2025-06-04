@@ -3,7 +3,7 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-ваш_секретный_ключ'  # Смените на случайный!
+SECRET_KEY = '123456789'
 
 DEBUG = True
 
