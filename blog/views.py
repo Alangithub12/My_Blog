@@ -81,3 +81,7 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
+
+def logout_view(request):
+    logout(request)  # Выход из аккаунта
+    return redirect('login')  # Перенаправление на страницу входа (или 'register' для регистрации)
