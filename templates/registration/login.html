@@ -5,6 +5,5 @@
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn btn-primary">Войти</button>
-        <a href="{{ url_for('auth.logout') }}">Выйти</a>
     </form>
 {% endblock %}
